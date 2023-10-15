@@ -13,4 +13,26 @@ typedef struct item {
 
 #define MAXITEMS 10
 
-typedef
+typedef struct trnode {
+	Item item;
+	struct trnode* left;
+	struct trnode* right;
+}Trnode;
+
+typedef struct tree {
+	Trnode* root;
+	int size;
+}Tree;
+
+/* 函数原型 */
+
+/* 操作：			把树初始化为空 */
+/* 前提条件：		ptree指向一个树 */
+/* 后置条件：		树被初始化为空 */
+void InitializeTree(Tree* prtee);
+
+/* 操作：			确定树是否为空 */
+/* 前提条件：		ptree指向一个树 */
+/* 后置条件：		如果树为空，该函数返回true */
+/*						否则，返回false */
+bool TreeIsEmpty(const Tree* ptree);
