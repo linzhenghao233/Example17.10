@@ -19,3 +19,27 @@ static void InOrder(const Trnode* root, void(*pfun)(Item item));
 static Pair SeekItem(const Item* pi, const Tree* ptree);
 static void DeleteNode(Trnode** ptr);
 static void DeleteAllNodes(Trnode* ptr);
+
+/* º¯Êý¶¨Òå */
+void InitialzeTree(Tree* ptree) {
+	ptree->root = NULL;
+	ptree->size = 0;
+}
+
+bool TreeIsEmpty(const Tree* ptree) {
+	if (ptree->root == NULL)
+		return true;
+	else
+		return false;
+}
+
+bool TreeIsFull(const Tree* ptree) {
+	if (ptree->size == MAXITEMS)
+		return true;
+	else
+		return false;
+}
+
+int TreeItemCount(const Tree* ptree) {
+	return ptree->size;
+}
