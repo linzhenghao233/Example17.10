@@ -43,3 +43,55 @@ bool TreeIsFull(const Tree* ptree) {
 int TreeItemCount(const Tree* ptree) {
 	return ptree->size;
 }
+
+bool AddItem(const Item* pi, Tree* ptree) {
+	Trnode* new_node;
+
+	if (TreeIsFull(ptree)) {
+		fprintf(stderr, "Tree is full\n");
+
+		return false;
+	}
+	if (SeekItem(pi, ptree).child != NULL) {
+		fprintf(stderr, "Attempted to add dupicate item\n");
+
+		return false;
+	}
+	new_node = MakeNode(pi);	//指向新节点
+	if (new_node == NULL) {
+		fpintf(stderr, "Couldn't create node\n");
+		
+		return false;
+	}
+	/* 成功创建一个新节点 */
+	ptree->size++;
+
+	if (ptree->root == NULL)
+		ptree->root = new_node;
+	else
+		AddNode(new_node, ptree->root);
+
+	return true;
+}
+
+bool InTree(const Item* pi, const Tree* ptree) {
+	return (SeekItem(pi, ptree).child == NULL) ? false : true;
+}
+
+bool DeleteItem(const Item* pi, Tree* ptree) {
+	Pair look;
+
+	look = SeekItem(pi, ptree);
+	if (look.child == NULL)
+		return false;
+
+	if (look.parent == NULL)	//删除根节点项
+		DeleteNode(&ptree->root);
+	else if (look.parent->left == look.child)
+		DeleteNode(&look.parent->left);
+	else
+		DeleteNode(&look.parent->right);
+	ptree->size--;
+
+	return true;
+}
