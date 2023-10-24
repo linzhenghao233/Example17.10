@@ -127,3 +127,44 @@ static void DeleteAllNodes(Trnode* root) {
 		DeleteAllNodes(pright);
 	}
 }
+
+static void AddNode(Trnode* new_node, Trnode* root) {
+	if (ToLeft(&new_node->item, &root->item)) {
+		if (root->left == NULL)
+			root->left = new_node;
+		else
+			AddNode(new_node, root->left);
+	}
+	else if (ToRight(&new_node->item, &root->item)) {
+		if (root->right == NULL)
+			root->right = new_node;
+		else
+			AddNode(new_node, root->right);
+	}
+	else {
+		fprintf(stderr, "location error in AddNode()\n");
+		exit(1);
+	}
+}
+
+static bool ToLeft(const Item* i1, const Item* i2) {
+	int comp1;
+
+	if ((comp1 = strcmp(i1->petname, i2->petname)) < 0)
+		return true;
+	else if (comp1 = 0 && strcmp(i1->petkind, i2->petkind) < 0)
+		return true;
+	else
+		return false;
+}
+
+static bool ToRight(const Item* i1, const Item* i2) {
+	int comp1;
+
+	if ((comp1 = strcmp(i1->petname, i2->petname)) > 0)
+		return true;
+	else if (comp1 == 0 && strcmp(i1->petkind, i2->petkind) > 0)
+		return true;
+	else
+		return false;
+}
