@@ -168,3 +168,40 @@ static bool ToRight(const Item* i1, const Item* i2) {
 	else
 		return false;
 }
+
+static Trnode* MakeNode(const Item* pi) {
+	Trnode* new_node;
+
+	new_node = (Trnode*)malloc(sizeof(Trnode));
+	if (new_node != NULL) {
+		new_node->item = *pi;
+		new_node->left = NULL;
+		new_node->right = NULL;
+	}
+
+	return new_node;
+}
+
+static Pair SeekItem(const Item* pi, const Tree* ptree) {
+	Pair look;
+	look.parent = NULL;
+	look.child = ptree->root;
+
+	if (look.child == NULL)
+		return look;
+
+	while (look.child != NULL) {
+		if (ToLeft(pi, &(look.child->item))) {
+			look.parent = look.child;
+			look.child = look.child->left;
+		}
+		else if (ToRight(pi, &(look.child->item))) {
+			look.parent = look.child;
+			look.child = look.child->right;
+		}
+		else
+			break;
+	}
+
+	return look;
+}
