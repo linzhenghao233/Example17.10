@@ -59,7 +59,7 @@ bool AddItem(const Item* pi, Tree* ptree) {
 	}
 	new_node = MakeNode(pi);	//指向新节点
 	if (new_node == NULL) {
-		fpintf(stderr, "Couldn't create node\n");
+		fprintf(stderr, "Couldn't create node\n");
 		
 		return false;
 	}
@@ -152,7 +152,7 @@ static bool ToLeft(const Item* i1, const Item* i2) {
 
 	if ((comp1 = strcmp(i1->petname, i2->petname)) < 0)
 		return true;
-	else if (comp1 = 0 && strcmp(i1->petkind, i2->petkind) < 0)
+	else if (comp1 == 0 && strcmp(i1->petkind, i2->petkind) < 0)
 		return true;
 	else
 		return false;
@@ -204,4 +204,27 @@ static Pair SeekItem(const Item* pi, const Tree* ptree) {
 	}
 
 	return look;
+}
+
+static void DeleteNode(Trnode** ptr) {
+	Trnode* temp;
+
+	if ((*ptr)->left == NULL) {
+		temp = *ptr;
+		*ptr = (*ptr)->right;
+		free(temp);
+	}
+	else if ((*ptr)->right == NULL) {
+		temp = *ptr;
+		*ptr = (*ptr)->left;
+		free(temp);
+	}
+	else {
+		for (temp = (*ptr)->left; temp->right != NULL; temp = temp->right)
+			continue;
+		temp->right = (*ptr)->right;
+		temp = *ptr;
+		*ptr = (*ptr)->left;
+		free(temp);
+	}
 }
