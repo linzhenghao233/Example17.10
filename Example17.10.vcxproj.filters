@@ -23,5 +23,8 @@
     <ClCompile Include="tree.c">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="petclub.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
